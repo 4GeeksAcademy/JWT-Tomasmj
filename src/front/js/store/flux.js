@@ -23,8 +23,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					console.log(error);
 				}
-			}
-			
+			},
+
+			login: async(email, password) => {
+				try{
+					const response = await fetch(url + "login", {
+						method: "POST",
+						body: JSON.stringify({
+							email: email,
+							password: password
+						}),
+						headers:{"Content-Type": "application/json"}
+					})
+					
+					if (response.status == 200){ //chequear que el back end devuelva 200
+						const data= await response.json()//necesitamos que nos devuelva el token. info que llega
+						localStorage.setItem("token", data.access_token) // almacenar en el local storage
+					} 
+					
+					console.log(response); // ver el status en la consola
+				} catch(error) {
+					console.log(error);
+				}
+			}	
 		}
 	};
 };

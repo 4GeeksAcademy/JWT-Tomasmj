@@ -7,6 +7,14 @@ from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 import json
 
+#documentacion
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager # importarlo en app.py
+#instalar JWT primero que todo
+
+
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
@@ -39,4 +47,28 @@ def new_user():
         #traer los datos de este usuario como respuesta
         return jsonify(usuario.serialize()), 200   
     return jsonify({"msg": "Ya existe el usuario"}), 404
+
+# Create a route to authenticate your users and return JWTs. The
+# create_access_token() function is used to actually generate the JWT.
+@api.route("/login", methods=["POST"]) #cambiar app por api
+def login():
+    email = request.json.get("email", None) #cambiar por email que es lo que tenemos en la tabla
+    password = request.json.get("password", None)
+    usuario = User.query.filter_by(email=email).first()
+    if usuario is None:
+        return jsonify({"msg": "No existe el usuario"}), 404
+
+    if email != usuario.email or password != usuario.password: 
+        return jsonify({"msg": "Bad username or password"}), 401
+
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token)
+
+
+
+
+#importar esto en en el archivo app.py
+# Setup the Flask-JWT-Extended extension
+#app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+#jwt = JWTManager(app)
 
