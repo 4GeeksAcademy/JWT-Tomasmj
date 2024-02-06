@@ -1,18 +1,24 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+import { useNavigate  } from "react-router-dom"; //importar el useNavigate
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+	const { store, actions } = useContext(Context)
+	const navigate = useNavigate() //crear esto
 	const [name, setName] = useState("")
 	const [lastname, setlastName] = useState("")
 	const [password, setPassword] = useState("")
 	const [email, setEmail] = useState("")
 
-	const guardar = (e) => { // la e es la misma del e.target.value
+	const guardar = async (e) => { // la e es la misma del e.target.value
 		e.preventDefault() //detiene el envio de la info
-		actions.registro(name, lastname, email, password) // acceder a los actions del flux
+		let rsp = await actions.registro(name, lastname, email, password) // acceder a los actions del flux
+		//aqui espera true
+		console.log(rsp);
+		if (rsp){
+			navigate("/login") // or al login
+		}
 		setName("")
 		setlastName("")
 		setEmail("")

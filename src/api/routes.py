@@ -64,6 +64,22 @@ def login():
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token)
 
+@api.route("/profile", methods=["GET"])
+@jwt_required() #a fuegoooooo
+def protected():
+    current_user = get_jwt_identity() #saber que usuario es?
+    user = User.query.filter_by(email=current_user).first() #check la identidad y aqui obtiene el email
+    if user is None:
+        return jsonify({"msg": "No existe el usuario"}), 401
+    response_body = {"user": user.serialize()}
+    return jsonify(response_body), 200
+#Para probar esto: necesito estar loggeado
+#postan a la ruta login, pasar por body email y password [post]
+#obtener el token 
+#hacer un profile en postman ir autorizathons bearer token y pehar el token
+
+
+# despues de crear usa el useNavigate para dirigir al login CREAR RUTA PRIVADA
 
 
 

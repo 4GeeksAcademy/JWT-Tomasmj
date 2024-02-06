@@ -1,5 +1,6 @@
 import React, {useState, useContext} from 'react'
 import { Context } from "../store/appContext";
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -7,10 +8,14 @@ export const Login = () => {
   const { store, actions } = useContext(Context);
   const[email, setEmail] = useState("")
   const[password, setPassword] = useState("")
+  const navigate = useNavigate()
 
-  const loggeo = (e) => {
+  const loggeo = async (e) => {
     e.preventDefault()
-    actions.login(email, password)
+    let respuesta = await actions.login(email, password)
+    if (respuesta) {
+      navigate("/protected")
+    }
 
   }
 
