@@ -40,7 +40,7 @@ export const Home = () => {
 					<div className="col">
 						<div className="mb-3">
 							<label for="exampleInputEmail1" className="form-label">Lastname</label>
-							<input value={lastname} onChange={(e) => setlastName(e.target.value)} type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+							<input value={lastname} onChange={(e) => setlastName(e.target.value)} type="text" className="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" />
 						</div>
 					</div>
 				</div>
@@ -49,14 +49,14 @@ export const Home = () => {
 					<div className="col">
 						<div className="mb-3">
 							<label for="exampleInputEmail1" className="form-label">Email address</label>
-							<input value={email} onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+							<input value={email} onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="exampleInputEmail3" aria-describedby="emailHelp" />
 							<div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
 						</div>
 					</div>
 					<div className="col">
 						<div className="mb-3">
 							<label for="exampleInputPassword1" className="form-label">Password</label>
-							<input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id="exampleInputPassword1" />
+							<input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id="exampleInputPassword4" />
 						</div>
 					</div>
 				</div>
