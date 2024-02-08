@@ -52,20 +52,23 @@ def new_user():
 # create_access_token() function is used to actually generate the JWT.
 @api.route("/login", methods=["POST"]) #cambiar app por api
 def login():
+    #esto es lo que esta esperando recibir. puedo porbar con esto en posman email, password
     email = request.json.get("email", None) #cambiar por email que es lo que tenemos en la tabla
     password = request.json.get("password", None)
     usuario = User.query.filter_by(email=email).first()
     if usuario is None:
         return jsonify({"msg": "No existe el usuario"}), 404
 
-    if email != usuario.email or password != usuario.password: 
-        return jsonify({"msg": "Bad username or password"}), 401
-
-    access_token = create_access_token(identity=email)
+    if email != usuario.email or password != usuario.password: #chequear email y password este bien
+        return jsonify({"msg": "Bad email or password"}), 401
+    #si no se cumple lina 58 o 64
+    access_token = create_access_token(identity=email) # da el token para el email
     return jsonify(access_token=access_token)
+    #conectar el frontend, a traves del flux
 
+#
 @api.route("/profile", methods=["GET"])
-@jwt_required() #a fuegoooooo
+@jwt_required() #a fuegoooooo me obliga a estar loggeado
 def protected():
     current_user = get_jwt_identity() #saber que usuario es?
     user = User.query.filter_by(email=current_user).first() #check la identidad y aqui obtiene el email

@@ -28,8 +28,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			login: async (email, password) => {
-				try {
+			login: async (email, password) => { // recibo los mismo datos 56, 57 del routes.py
+				try { // vreacion variable respuesta
 					const response = await fetch(url + "login", {
 						method: "POST",
 						body: JSON.stringify({
@@ -39,9 +39,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: { "Content-Type": "application/json" }
 					})
 					if (response.status == 200) { //chequear que el back end devuelva 200
+						// transformar la respuesta a json
 						const data = await response.json()//necesitamos que nos devuelva el token. info que llega
 						localStorage.setItem("token", data.access_token) // almacenar en el local storage
-						setStore({ auth: true })
+						setStore({ auth: true }) // confirmar si esta autorizado o no, para ver los botones
 						return true
 					}
 					console.log(response); // ver el status en la consola
@@ -55,19 +56,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const response = await fetch(url + "profile", {
 						method: "GET",
-						headers: { Authorization: "Bearer " + access_token } // pasando el toke, capturado en el lcoal storage
+						headers: { Authorization: "Bearer " + access_token } // pasando el token, capturado en el lcoal storage
 					})
 					const data = await response.json() //pasar a json la info  y daya tiene la info usuario
 					console.log(data);
-					setStore({ profile: data.user })
-					setStore({ auth: true })
+					setStore({ profile: data.user }) // aca guardo la info del usuario que esta loggeado en el store
+					setStore({ auth: true }) // confirmar que esta autorizado
 				} catch (error) {
 					console.log(error);
 					return false
 				} // crear vista protegido
 			},
 			logout: () => {
-				localStorage.removeItem("token")
+				localStorage.removeItem("token") // rompe el token lo borra
 				setStore({ auth: false })
 			}
 		}
