@@ -12,7 +12,9 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager # importarlo en app.py
-#instalar JWT primero que todo
+#instalar JWT primero que todo 
+#importar en app.py el:  from flask_jwt_extended import JWTManager #importar
+# instalar flask  pipenv install flask-jwt-extended
 
 
 api = Blueprint('api', __name__)
